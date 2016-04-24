@@ -87,11 +87,10 @@ public class Vector {
 
 	public Double normaDos(){
 		Double norma=0.0;
-		for (int i=0; i<this.vector.length;i++)
-			if(this.vector[i]>=0)
-				norma+=this.vector[i]*this.vector[i];
-			else
-				norma-=this.vector[i]*this.vector[i];
+		for (int i=0; i<this.vector.length;i++){
+
+			norma+=this.vector[i]*this.vector[i];
+		}
 		return Math.sqrt(norma);
 	}
 
@@ -102,7 +101,7 @@ public class Vector {
 			if (this.vector[i]>=0 && this.vector[i]>norma)
 				norma=this.vector[i];
 			else
-				if (this.vector[i]<0 && -this.vector[i]<norma)
+				if (this.vector[i]<0 && -this.vector[i]>norma)
 					norma=-this.vector[i];
 		return norma;
 	}	
@@ -126,7 +125,7 @@ public class Vector {
 		String cadena="(";
 		for (int i = 0; i < this.vector.length; i++)
 			cadena+=this.vector[i]+" , ";
-		
+
 		cadena=cadena.substring(0, (cadena.length())-3);
 		cadena+=")";
 		return cadena;
