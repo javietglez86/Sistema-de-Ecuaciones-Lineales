@@ -1,16 +1,16 @@
 package ar.edu.uno.poo2.modulo;
 
-public class Vector {
-	private Double[] vector;
+public class Vector extends Matriz{
+	//private Double[] vector;
 	private int ultimo=0;
 
 	public Vector(int dimension){
-		vector= new Double[dimension];
+		super(1, dimension);
 	}
 
 	public boolean agregar(Double valor){
-		if (ultimo < vector.length) {
-			vector[ultimo]=valor;
+		if (ultimo < this.getJ()) {
+			this.matriz[0][ultimo]=valor;
 			ultimo++;
 			return true;
 		}else
@@ -19,9 +19,9 @@ public class Vector {
 
 	public void sumar(Vector otroVector) throws MissMatchDimensionException{
 		try{
-			if (this.vector.length==otroVector.vector.length){
-				for (int i = 0; i < this.vector.length; i++)
-					this.vector[i]+=otroVector.vector[i];
+			if (this.getJ()==otroVector.getJ()){
+				for (int i = 0; i < this.getJ(); i++)
+					this.matriz[0][i]+=otroVector.matriz[0][i];
 			}
 			else
 				throw new MissMatchDimensionException();
@@ -34,8 +34,8 @@ public class Vector {
 	}
 
 	public void restar(Vector otroVector) throws MissMatchDimensionException{
-		for (int i = 0; i < otroVector.vector.length; i++)
-			otroVector.vector[i]*=-1;
+		for (int i = 0; i < otroVector.getJ(); i++)
+			otroVector.matriz[0][i]*=-1;
 		this.sumar(otroVector);
 	}
 
@@ -44,9 +44,9 @@ public class Vector {
 		Double producto=0.0;
 		try{
 
-			if (this.vector.length==otroVector.vector.length){
-				for (int i = 0; i < this.vector.length; i++)
-					producto+=this.vector[i]*otroVector.vector[i];
+			if (this.getJ()==otroVector.getJ()){
+				for (int i = 0; i < this.getJ(); i++)
+					producto+=this.matriz[0][i]*otroVector.matriz[0][i];
 			}
 			else
 				throw new MissMatchDimensionException();
@@ -63,8 +63,8 @@ public class Vector {
 	}
 
 	public void productoXEscalar(Double escalar){
-		for (int i = 0; i < this.vector.length; i++)
-			this.vector[i]=this.vector[i]*escalar;
+		for (int i = 0; i < this.getJ(); i++)
+			this.matriz[0][i]=this.matriz[0][i]*escalar;
 
 	}
 	/*
@@ -77,32 +77,34 @@ public class Vector {
 
 	public Double normaUno(){
 		Double norma=0.0;
-		for (int i=0; i<this.vector.length;i++)
-			if(this.vector[i]>=0)
-				norma+=this.vector[i];
+		for (int i=0; i<this.getJ();i++)
+			if(this.matriz[0][i]>=0)
+				norma+=this.matriz[0][i];
 			else
-				norma-=this.vector[i];
+				norma-=this.matriz[0][i];
 		return norma;
 	}
 
 	public Double normaDos(){
 		Double norma=0.0;
-		for (int i=0; i<this.vector.length;i++){
+		for (int i=0; i<this.getJ();i++){
 
-			norma+=this.vector[i]*this.vector[i];
+			norma+=this.matriz[0][i]*this.matriz[0][i];
 		}
 		return Math.sqrt(norma);
 	}
 
 	public Double normaInfinito(){
-		Double norma=(this.vector[0]>=0)?this.vector[0]:-this.vector[0];
-
-		for (int i=1; i<this.vector.length;i++)
-			if (this.vector[i]>=0 && this.vector[i]>norma)
-				norma=this.vector[i];
+		Double norma=(this.matriz[0][0]>=0)?this.matriz[0][0]:-this.matriz[0][0];
+		Double aux= null;
+		for (int i=1; i<this.getJ();i++){
+			aux = (this.matriz[0][i]>=0)?this.matriz[0][i]:-this.matriz[0][i];
+			if (aux>=0 && aux>norma)
+				norma=this.matriz[0][i];
 			else
-				if (this.vector[i]<0 && -this.vector[i]>norma)
-					norma=-this.vector[i];
+				if (aux<0 && aux>norma)
+					norma=-this.matriz[0][i];
+		}
 		return norma;
 	}	
 
@@ -111,8 +113,8 @@ public class Vector {
 		boolean bandera=true; 
 		if (otroVector.getClass().getSimpleName()=="Vector"){
 			Vector temporal=(Vector)otroVector;
-			for (int i =0; i< this.vector.length; i++)
-				if (this.vector[i]!=temporal.vector[i])
+			for (int i =0; i< this.getJ(); i++)
+				if (this.matriz[0][i]!=temporal.matriz[0][i])
 					bandera=false;
 		}
 		else
@@ -123,8 +125,8 @@ public class Vector {
 	@Override
 	public String toString() {
 		String cadena="(";
-		for (int i = 0; i < this.vector.length; i++)
-			cadena+=this.vector[i]+" , ";
+		for (int i = 0; i < this.getJ(); i++)
+			cadena+=this.matriz[0][i]+" , ";
 
 		cadena=cadena.substring(0, (cadena.length())-3);
 		cadena+=")";
