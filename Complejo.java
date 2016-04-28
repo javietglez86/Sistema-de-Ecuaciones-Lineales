@@ -70,13 +70,28 @@ public class Complejo {
 	
 	@Override
 	public String toString() {
-		return getParteReal() + " + " + getParteImaginaria() + "i";
+		return getParteReal() + " + " + getParteImaginaria() + "i" + ", módulo: " + this.modulo() ;
 	}
 
 	//Método main para Testing de métodos
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		OrdenarComplejos oc = new OrdenarComplejos();
+		oc.agregarElemento(new Complejo(1.0, 2));
+		oc.agregarElemento(new Complejo(5.0, 1));
+		oc.agregarElemento(new Complejo(3, 2));
+		oc.agregarElemento(new Complejo(2.0, 5));
+		
+		System.out.println("ordenando por modulo");
+		for (Complejo c : oc.ordenarPorModulo(true))
+			System.out.println(c);
+		
+		System.out.println("ordenando por parte Real");
+		for (Complejo c : oc.ordenarPorReal(true))
+			System.out.println(c);
+		
+		System.out.println("ordenando por parte Imaginaria");
+		for (Complejo c : oc.ordenarPorImaginario(true))
+			System.out.println(c);
 	}
-
 }
