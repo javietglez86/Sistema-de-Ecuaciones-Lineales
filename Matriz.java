@@ -72,7 +72,7 @@ public class Matriz {
 						a++;
 					}
 					
-					matrizResultante.matriz[i][b]=auxiliar;
+					matrizResultante.agregar(i, b, auxiliar);
 					b++;
 				}
 			}
@@ -86,6 +86,55 @@ public class Matriz {
 		}
 		return matrizResultante;
 	}
+	
+	//Matriz Inversa
+	
+	public Matriz matrizInversa(){
+		Matriz inversa = new Matriz(this.getI(),this.getJ());
+		if (this.getI()==this.getJ()){
+			double auxiliar;
+			//inversa=
+			for (int i=0; i<inversa.getI();i++)
+				for (int j=0; j<inversa.getJ(); j++)
+					if (i==j)
+						inversa.agregar(i, j, 1.0);
+					else
+						inversa.agregar(i, j, 0.0);
+			for (int i=0; i<this.getI(); i++){
+				System.out.println("I "+i);
+				System.out.println(this.toString());
+				//Verificar antes que sea distinto de 0
+				if (this.matriz[i][i]!=1.0){
+					auxiliar = matriz[i][i];
+					for (int j=0; j<this.getJ(); j++){
+						this.matriz[i][j]=this.matriz[i][j]/auxiliar;
+						//System.out.println(this.toString());
+						inversa.matriz[i][j]=inversa.matriz[i][j]/auxiliar;
+						//System.out.println(inversa.toString());
+					}
+				}
+				for ( int k=i+1; k<this.getI(); k++){
+					auxiliar=this.matriz[k][i];
+					System.out.println("K "+k);
+					System.out.println(this.toString());
+					for ( int j=i; j<this.getJ(); j++){
+						System.out.println("j= "+j);
+						
+						this.matriz[k][j]=this.matriz[k][j]-auxiliar*this.matriz[i][j];
+						inversa.matriz[k][j]=inversa.matriz[k][j]-auxiliar*inversa.matriz[i][j];
+						System.out.println(this.toString());
+					}
+				}
+				
+			}
+		}
+		else{
+			//Arrojar excepcion
+			System.out.println("La matriz debe ser cuadrada.");
+		}
+		return inversa;
+	}
+	
 
 
 	// Getters y setters
