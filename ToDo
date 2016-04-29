@@ -3,13 +3,12 @@ Marcelo
   - Desarrollar Matriz Inversa
   - Resolver SEL
 Matias
-  - Matriz Suma/resta/producto
-  - Matriz x Matrix/Escalar/Vector
+
+  - Matriz  Vector
   - Equals (Meter un for mas al de vector)
-  - Adecuar NormaUno, NormaDos, NormaInfinito
 
 David
- - Ordenar Nros Complejos
+ 
  - Constructores con entrada y salida de datos
  - Static boole Test?
  - mostrarResultado()
