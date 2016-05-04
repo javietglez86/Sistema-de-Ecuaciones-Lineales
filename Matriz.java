@@ -81,6 +81,37 @@ public class Matriz {
 		return inversa;
 	}
 	
+	public double determinante(){
+		double determinante=1.0;
+		double auxiliar1;
+		double auxiliar2;
+		Matriz original = new Matriz(this.getI(), this.getJ());
+		
+		for (int i=0; i<this.getI();i++)
+			for(int j=0; j<this.getJ();j++)
+				original.matriz[i][j]=this.matriz[i][j];
+		
+		if (original.getI()==original.getJ()){
+			for (int i=0; (i<original.getI()-1); i++){
+				auxiliar2=original.matriz[i][i];
+
+				for (int k=i+1; k<original.getI();k++){
+					auxiliar1=original.matriz[k][i]/auxiliar2;
+					for (int j=0; j<original.getJ(); j++){
+						original.matriz[k][j]= original.matriz[k][j]-auxiliar1*original.matriz[i][j];
+					}
+					
+
+				}
+
+			}
+		}
+		
+		for (int i=0; i<original.getI();i++)
+			determinante*=original.matriz[i][i];
+		return determinante;
+	}
+	
 	public Integer getI() {
 		return this.i;
 	}
