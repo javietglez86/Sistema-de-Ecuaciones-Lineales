@@ -18,8 +18,12 @@ public class Matriz {
 	}
 	
 	public Matriz matrizInversa(){
-		Matriz inversa = new Matriz(this.getI(),this.getJ());
-		if (this.getI()==this.getJ()){
+		Matriz original = new Matriz(this.getI(), this.getJ());
+		for (int i=0; i<this.getI();i++)
+			for(int j=0; j<this.getJ();j++)
+				original.matriz[i][j]=this.matriz[i][j];
+		Matriz inversa = new Matriz(original.getI(),original.getJ());
+		if (original.getI()==original.getJ()){
 			double auxiliar;
 			for (int i=0; i<inversa.getI();i++){
 				for (int j=0; j<inversa.getJ(); j++)
@@ -28,38 +32,38 @@ public class Matriz {
 					else
 						inversa.agregar(i, j, 0);
 			}
-			for (int i=0; (i<this.getI()-1); i++){
+			for (int i=0; (i<original.getI()-1); i++){
 
-				if (this.matriz[i][i]!=1){
-					auxiliar=this.matriz[i][i];
-					for (int j=0; j<this.getJ(); j++){
-						this.matriz[i][j]=this.matriz[i][j]/auxiliar;
+				if (original.matriz[i][i]!=1){
+					auxiliar=original.matriz[i][i];
+					for (int j=0; j<original.getJ(); j++){
+						original.matriz[i][j]=original.matriz[i][j]/auxiliar;
 						inversa.matriz[i][j]=inversa.matriz[i][j]/auxiliar;
 					}
 				}
 				
-				for (int k=i+1; k<this.getI();k++){
-					auxiliar=this.matriz[k][i];
-					for (int j=0; j<this.getJ(); j++){
-						this.matriz[k][j]= this.matriz[k][j]-auxiliar*this.matriz[i][j];
+				for (int k=i+1; k<original.getI();k++){
+					auxiliar=original.matriz[k][i];
+					for (int j=0; j<original.getJ(); j++){
+						original.matriz[k][j]= original.matriz[k][j]-auxiliar*original.matriz[i][j];
 						inversa.matriz[k][j]= inversa.matriz[k][j]-auxiliar*inversa.matriz[i][j];
 					}
 				}
 
 			}
-			if (this.matriz[this.getI()-1][this.getI()-1]!=1){
-				auxiliar=this.matriz[this.getI()-1][this.getI()-1];
-				for (int j=0; j<this.getJ(); j++){
-					this.matriz[this.getI()-1][j]=this.matriz[this.getI()-1][j]/auxiliar;
+			if (original.matriz[original.getI()-1][original.getI()-1]!=1){
+				auxiliar=original.matriz[original.getI()-1][original.getI()-1];
+				for (int j=0; j<original.getJ(); j++){
+					original.matriz[original.getI()-1][j]=original.matriz[original.getI()-1][j]/auxiliar;
 					inversa.matriz[inversa.getI()-1][j]=inversa.matriz[inversa.getI()-1][j]/auxiliar;
 				}
 			}
 			//Segunda parte.
-			for (int i=this.getI()-1; (i>0); i--){
+			for (int i=original.getI()-1; (i>0); i--){
 				for (int k=i-1; k>=0;k--){
-					auxiliar=this.matriz[k][i];
-					for (int j=this.getJ()-1; j>=0; j--){
-						this.matriz[k][j]= this.matriz[k][j]-auxiliar*this.matriz[i][j];
+					auxiliar=original.matriz[k][i];
+					for (int j=original.getJ()-1; j>=0; j--){
+						original.matriz[k][j]= original.matriz[k][j]-auxiliar*original.matriz[i][j];
 						inversa.matriz[k][j]= inversa.matriz[k][j]-auxiliar*inversa.matriz[i][j];
 					}
 				}
