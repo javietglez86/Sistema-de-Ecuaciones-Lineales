@@ -27,28 +27,28 @@ public class Matriz {
 						inversa.agregar(i, j, 1);
 					else
 						inversa.agregar(i, j, 0);
-			for (int i=0; i<this.getI(); i++){
-				//System.out.println("I "+i);
-				System.out.println("Matriz \n"+this.toString());
-				System.out.println("Inversa \n"+inversa.toString());
-				//Verificar antes que sea distinto de 0
-				if (this.matriz[i][i]!=1.0){
-					auxiliar = matriz[i][i];
+			for (int i=0; (i<this.getI()-1); i++){
+
+				if (this.matriz[i][i]!=1){
+					auxiliar=this.matriz[i][i];
 					for (int j=0; j<this.getJ(); j++){
 						this.matriz[i][j]=this.matriz[i][j]/auxiliar;
-						inversa.matriz[i][j]=inversa.matriz[i][j]/auxiliar;
-					}
-				}
-				for ( int k=i+1; k<this.getI(); k++){
-					auxiliar=this.matriz[k][i];
-					//System.out.println("K "+k);
-					//System.out.println(this.toString());
-					for ( int j=i; j<this.getJ(); j++){
-						this.matriz[k][j]=this.matriz[k][j]-auxiliar*this.matriz[i][j];
-						inversa.matriz[k][j]=inversa.matriz[k][j]-auxiliar*inversa.matriz[i][j];
 					}
 				}
 				
+				for (int k=i+1; k<this.getI();k++){
+					auxiliar=this.matriz[k][i];
+					for (int j=0; j<this.getJ(); j++){
+						this.matriz[k][j]= this.matriz[k][j]-auxiliar*this.matriz[i][j];
+					}
+				}
+
+			}
+			if (this.matriz[this.getI()-1][this.getI()-1]!=1){
+				auxiliar=this.matriz[this.getI()-1][this.getI()-1];
+				for (int j=0; j<this.getJ(); j++){
+					this.matriz[this.getI()-1][j]=this.matriz[this.getI()-1][j]/auxiliar;
+				}
 			}
 			System.out.println("Segunda parte");
 			for (int i=this.getI()-1; i>=0; i--){
