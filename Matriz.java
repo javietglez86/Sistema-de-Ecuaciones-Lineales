@@ -21,18 +21,20 @@ public class Matriz {
 		Matriz inversa = new Matriz(this.getI(),this.getJ());
 		if (this.getI()==this.getJ()){
 			double auxiliar;
-			for (int i=0; i<inversa.getI();i++)
+			for (int i=0; i<inversa.getI();i++){
 				for (int j=0; j<inversa.getJ(); j++)
 					if (i==j)
 						inversa.agregar(i, j, 1);
 					else
 						inversa.agregar(i, j, 0);
+			}
 			for (int i=0; (i<this.getI()-1); i++){
 
 				if (this.matriz[i][i]!=1){
 					auxiliar=this.matriz[i][i];
 					for (int j=0; j<this.getJ(); j++){
 						this.matriz[i][j]=this.matriz[i][j]/auxiliar;
+						inversa.matriz[i][j]=inversa.matriz[i][j]/auxiliar;
 					}
 				}
 				
@@ -40,6 +42,7 @@ public class Matriz {
 					auxiliar=this.matriz[k][i];
 					for (int j=0; j<this.getJ(); j++){
 						this.matriz[k][j]= this.matriz[k][j]-auxiliar*this.matriz[i][j];
+						inversa.matriz[k][j]= inversa.matriz[k][j]-auxiliar*inversa.matriz[i][j];
 					}
 				}
 
@@ -48,27 +51,24 @@ public class Matriz {
 				auxiliar=this.matriz[this.getI()-1][this.getI()-1];
 				for (int j=0; j<this.getJ(); j++){
 					this.matriz[this.getI()-1][j]=this.matriz[this.getI()-1][j]/auxiliar;
+					inversa.matriz[inversa.getI()-1][j]=inversa.matriz[inversa.getI()-1][j]/auxiliar;
 				}
 			}
-			System.out.println("Segunda parte");
-			for (int i=this.getI()-1; i>=0; i--){
-				//System.out.println("I "+i);
-				//System.out.println(this.toString());
-				//Verificar antes que sea distinto de 0
-				System.out.println("Matriz \n"+this.toString());
-				System.out.println("Inversa \n"+inversa.toString());
-				for ( int k=this.getI()-1; k>i-1; k--){
+			//Segunda parte.
+			for (int i=this.getI()-1; (i>0); i--){
+				for (int k=i-1; k>=0;k--){
 					auxiliar=this.matriz[k][i];
-					//System.out.println("K "+k);
-					//System.out.println(this.toString());
-					for ( int j=this.getJ()-1; j>i; j--){
-						this.matriz[k][j]=this.matriz[k][j]-auxiliar*this.matriz[i][j];
-						inversa.matriz[k][j]=inversa.matriz[k][j]-auxiliar*inversa.matriz[i][j];
+					for (int j=this.getJ()-1; j>=0; j--){
+						this.matriz[k][j]= this.matriz[k][j]-auxiliar*this.matriz[i][j];
+						inversa.matriz[k][j]= inversa.matriz[k][j]-auxiliar*inversa.matriz[i][j];
 					}
 				}
-				
+
 			}
-			
+
+
+
+
 		}
 		else{
 			//Arrojar excepcion
