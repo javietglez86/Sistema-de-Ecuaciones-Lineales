@@ -41,7 +41,7 @@ public class Matriz {
 				
 				for (int k=0; k<original.getI();k++){
 					boolean filaCero=true;
-					for (int j=0; (j<original.getJ()&& !filaCero);j++){
+					for (int j=0; (j<original.getJ()&& filaCero);j++){
 						if (original.matriz[k][j]!=0){
 							filaCero=false;
 						}
@@ -92,6 +92,15 @@ public class Matriz {
 					}
 				}
 
+			}
+			boolean filaCero=true;
+			for (int j=0; (j<original.getJ()&& filaCero);j++){
+				if (original.matriz[original.getI()-1][j]!=0){
+					filaCero=false;
+				}
+			}
+			if (filaCero){
+				throw new NoInversibleException();
 			}
 			if (original.matriz[original.getI()-1][original.getI()-1]!=1){
 				auxiliar=original.matriz[original.getI()-1][original.getI()-1];
