@@ -17,11 +17,13 @@ public class Matriz {
 		this.matriz[i][j]=dato;
 	}
 	
-	public Matriz matrizInversa(){
+	public Matriz matrizInversa()throws NoInversibleException{
+		//Creo original para no modificar la matriz
 		Matriz original = new Matriz(this.getI(), this.getJ());
 		for (int i=0; i<this.getI();i++)
 			for(int j=0; j<this.getJ();j++)
 				original.matriz[i][j]=this.matriz[i][j];
+		//Creo la matriz inversa y la cargo con los valores de la matriz identidad.
 		Matriz inversa = new Matriz(original.getI(),original.getJ());
 		if (original.getI()==original.getJ()){
 			double auxiliar;
@@ -32,8 +34,48 @@ public class Matriz {
 					else
 						inversa.agregar(i, j, 0);
 			}
+			//Convierto la matriz en triangular superior y al mismo tiempo
+			//convierto en uno la diagonal.
 			for (int i=0; (i<original.getI()-1); i++){
-
+				//Compruebo si alguna linea es cero
+				
+				for (int k=0; k<original.getI();k++){
+					boolean filaCero=true;
+					for (int j=0; (j<original.getJ()&& filaCero);j++){
+						if (original.matriz[k][j]!=0){
+							filaCero=false;
+						}
+					}
+					if (filaCero){
+						throw new NoInversibleException();
+					}
+				}
+				
+				
+				//Compruebo si el numero en la diagonal es cero
+				//si es cero intercambio por una fila donde no lo sea.
+				if (original.matriz[i][i]==0){
+					int otraFila=0;
+					double aux;
+					for (int j=i+1; j<original.getI(); j++){
+						if (original.matriz[i][i]!=0){
+							otraFila=j;
+							j=original.getI();
+						}
+					}
+					for (int j=i; j<original.getJ();j++){
+						aux=original.matriz[i][j];
+						original.matriz[i][j]= original.matriz[otraFila][j];
+						original.matriz[otraFila][j]= aux;
+						aux=inversa.matriz[i][j];
+						inversa.matriz[i][j]= inversa.matriz[otraFila][j];
+						inversa.matriz[otraFila][j]= aux;
+					}
+				}
+				
+				
+				//Compruebo si la diagonal es uno y si no divido toda la fila por el nÃºmero
+				//en la diagonal
 				if (original.matriz[i][i]!=1){
 					auxiliar=original.matriz[i][i];
 					for (int j=0; j<original.getJ(); j++){
@@ -59,6 +101,8 @@ public class Matriz {
 				}
 			}
 			//Segunda parte.
+			//A la matriz diagonal superior y con unos en la diagonal
+			//la convierto en la identidad.
 			for (int i=original.getI()-1; (i>0); i--){
 				for (int k=i-1; k>=0;k--){
 					auxiliar=original.matriz[k][i];
@@ -93,6 +137,20 @@ public class Matriz {
 		
 		if (original.getI()==original.getJ()){
 			for (int i=0; (i<original.getI()-1); i++){
+				//Compruebo si alguna linea es cero
+
+				for (int k=0; k<original.getI();k++){
+					boolean filaCero=true;
+					for (int j=0; (j<original.getJ()&& filaCero);j++){
+						if (original.matriz[k][j]!=0){
+							filaCero=false;
+						}
+					}
+					if (filaCero){
+						return 0;
+					}
+				}
+
 				auxiliar2=original.matriz[i][i];
 
 				for (int k=i+1; k<original.getI();k++){
