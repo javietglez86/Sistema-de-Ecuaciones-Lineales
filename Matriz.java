@@ -41,7 +41,7 @@ public class Matriz {
 				
 				for (int k=0; k<original.getI();k++){
 					boolean filaCero=true;
-					for (int j=0; (j<original.getJ()&& filaCero);j++){
+					for (int j=0; (j<original.getJ()&& !filaCero);j++){
 						if (original.matriz[k][j]!=0){
 							filaCero=false;
 						}
